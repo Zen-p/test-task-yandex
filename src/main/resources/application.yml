@@ -1,1 +1,13 @@
-spring.application.name=test-task
+spring:
+  application:
+    name: test-task
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring_yandex_test_task
+    password: password
+    username: postgres
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+server:
+  port: 8080
