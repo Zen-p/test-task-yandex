@@ -1,0 +1,1 @@
+CREATE DATABASE spring_yandex_test_task;

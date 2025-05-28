@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: test-task
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring_yandex_test_task
+    password: password
+    username: postgres
+server:
+  port: 8080
