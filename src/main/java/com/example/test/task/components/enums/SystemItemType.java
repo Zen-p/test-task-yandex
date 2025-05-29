@@ -1,4 +1,4 @@
-package com.example.test.task.components;
+package com.example.test.task.components.enums;
 
 
 

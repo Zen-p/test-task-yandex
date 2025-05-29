@@ -336,15 +336,15 @@ components:
         - id
         - type
       properties:
-        id:
-          type: string
-          nullable: false
-          description: Уникальный идентфикатор
-          example: "элемент_1_1"
-        url:
-          description: Ссылка на файл. Для папок поле равнно null.
-          type: string
-          nullable: true
+#        id:
+#          type: string
+#          nullable: false
+#          description: Уникальный идентфикатор
+#          example: "элемент_1_1"
+#        url:
+#          description: Ссылка на файл. Для папок поле равнно null.
+#          type: string
+#          nullable: true
         parentId:
           type: string
           nullable: true

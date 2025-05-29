@@ -1,6 +1,7 @@
-package com.example.test.task.components;
+package com.example.test.task.components.entities;
 
 
+import com.example.test.task.components.enums.SystemItemType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -27,28 +28,28 @@ public class SystemItem {
     @Size(min = 1, max = 255, message = "ID length must be between 1 and 255 characters")
     private String id;
 
+    @Column(name = "url", length = 255)
+    @Size(max = 255, message = "URL length must not exceed 255 characters")
+    private String url;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     @NotNull(message = "Type cannot be null")
     private SystemItemType type;
 
-    @Column(name = "url", length = 255)
-    @Size(max = 255, message = "URL length must not exceed 255 characters")
-    private String url;
+    @Column(name = "date", nullable = false)
+    @NotNull(message = "Date cannot be null")
+    private Instant date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private SystemItem parent;
+    private String parentId;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parentId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<SystemItem> children = new ArrayList<>();
 
     @Column(name = "size")
     @Min(value = 0, message = "Size must be non-negative")
-    private Long size;
+    private Integer size;
 
-    @Column(name = "date", nullable = false)
-    @NotNull(message = "Date cannot be null")
-    private Instant date;
+
 
 }
