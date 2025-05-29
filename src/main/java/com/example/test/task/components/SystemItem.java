@@ -2,42 +2,53 @@ package com.example.test.task.components;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "system_item")
 public class SystemItem {
 
     @Id
     @Column(name = "id", nullable = false, updatable = false)
+    @NotNull(message = "ID cannot be null")
+    @Size(min = 1, max = 255, message = "ID length must be between 1 and 255 characters")
     private String id;
-
-    private String url; // Для папок поле равнно null.
-
-    @Column(nullable = false)
-    private Instant date;
-
-    private String parentId; // id родительской папки
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
+    @NotNull(message = "Type cannot be null")
     private SystemItemType type;
 
-    private int size;
+    @Column(name = "url", length = 255)
+    @Size(max = 255, message = "URL length must not exceed 255 characters")
+    private String url;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private SystemItem parent;
 
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<SystemItem> children = new ArrayList<>();
 
-    private List<SystemItem> children; // Для файлов поле равно null.
+    @Column(name = "size")
+    @Min(value = 0, message = "Size must be non-negative")
+    private Long size;
 
-
-
-
+    @Column(name = "date", nullable = false)
+    @NotNull(message = "Date cannot be null")
+    private Instant date;
 
 }
