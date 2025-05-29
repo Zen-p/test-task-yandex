@@ -258,12 +258,12 @@ paths:
                     }
 components:
   schemas:
-    SystemItemType:
-      type: string
-      description: Тип элемента - папка или файл
-      enum:
-        - FILE
-        - FOLDER
+#    SystemItemType:
+#      type: string
+#      description: Тип элемента - папка или файл
+#      enum:
+#        - FILE
+#        - FOLDER
     SystemItem:
       type: object
       required:
@@ -271,21 +271,21 @@ components:
         - date
         - type
       properties:
-        id:
-          type: string
-          nullable: false
-          description: Уникальный идентфикатор
-          example: "элемент_1_1"
-        url:
-          description: Ссылка на файл. Для папок поле равнно null.
-          type: string
-          nullable: true
-        date:
-          type: string
-          format: date-time
-          nullable: false
-          description: Время последнего обновления элемента.
-          example: "2022-05-28T21:12:01.000Z"
+#        id:
+#          type: string
+#          nullable: false
+#          description: Уникальный идентфикатор
+#          example: "элемент_1_1"
+#        url:
+#          description: Ссылка на файл. Для папок поле равнно null.
+#          type: string
+#          nullable: true
+#        date:
+#          type: string
+#          format: date-time
+#          nullable: false
+#          description: Время последнего обновления элемента.
+#          example: "2022-05-28T21:12:01.000Z"
         parentId:
           type: string
           nullable: true
