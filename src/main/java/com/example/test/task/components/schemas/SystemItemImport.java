@@ -1,4 +1,4 @@
-package com.example.test.task.components.entities;
+package com.example.test.task.components.schemas;
 
 
 import com.example.test.task.components.enums.SystemItemType;
@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-@Entity
+
 public class SystemItemImport {
 
     @Id

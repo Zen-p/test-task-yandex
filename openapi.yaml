@@ -363,21 +363,24 @@ components:
         parentId: "элемент_1_1"
         size: 234
         type: FILE
+
+
+
     SystemItemImportRequest:
       type: object
       properties:
-        items:
-          type: array
-          description: Импортируемые элементы
-          nullable: false
-          items:
-            $ref: "#/components/schemas/SystemItemImport"
-        updateDate:
-          type: string
-          nullable: false
-          format: date-time
-          example: "2022-05-28T21:12:01.000Z"
-          description: Время обновления добавляемых элементов.
+#        items:
+#          type: array
+#          description: Импортируемые элементы
+#          nullable: false
+#          items:
+#            $ref: "#/components/schemas/SystemItemImport"
+#        updateDate:
+#          type: string
+#          nullable: false
+#          format: date-time
+#          example: "2022-05-28T21:12:01.000Z"
+#          description: Время обновления добавляемых элементов.
     SystemItemHistoryUnit:
       type: object
       required:

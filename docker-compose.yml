@@ -29,19 +29,19 @@ services:
       - postgres
     restart: unless-stopped
 
-  test_task:
-    container_name: test_task
-    image: youdzhin/test-task
-    ports:
-      - "80:8080"
-    depends_on:
-      - postgres
-      - pgadmin
-    networks:
-      - postgres
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    restart: unless-stopped
+#  test_task:
+#    container_name: test_task
+#    image: youdzhin/test-task
+#    ports:
+#      - "80:8080"
+#    depends_on:
+#      - postgres
+#      - pgadmin
+#    networks:
+#      - postgres
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    restart: unless-stopped
 
 
 

@@ -1,4 +1,4 @@
-package com.example.test.task.components.entities;
+package com.example.test.task.components.schemas;
 
 
 import com.example.test.task.components.enums.SystemItemType;
@@ -14,15 +14,12 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "system_item")
-public class SystemItem {
+@Table(name = "system_item_history_unit")
+public class SystemItemHistoryUnit {
 
-    @Id
     @Column(name = "id", nullable = false, updatable = false)
     @NotNull(message = "ID cannot be null")
     @Size(min = 1, max = 255, message = "ID length must be between 1 and 255 characters")
@@ -49,7 +46,5 @@ public class SystemItem {
     @Column(name = "size")
     @Min(value = 0, message = "Size must be non-negative")
     private Integer size;
-
-
 
 }
