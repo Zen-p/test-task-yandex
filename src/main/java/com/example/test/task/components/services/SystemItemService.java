@@ -7,11 +7,9 @@ import com.example.test.task.components.schemas.SystemItem;
 import com.example.test.task.components.schemas.SystemItemImport;
 import com.example.test.task.components.schemas.SystemItemImportRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @Scope("singleton")
@@ -58,6 +56,16 @@ public class SystemItemService {
 
             repository.save(systemItem);
 
+        }
+
+    }
+
+    public void deleteItem (String id) {
+        try {
+            SystemItem itemToDelete = repository.findById(id).orElse(null);
+            repository.delete(itemToDelete);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
 
     }

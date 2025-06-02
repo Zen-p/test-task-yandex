@@ -136,4 +136,36 @@ public class TestController {
         System.out.println("Response body: " + response.getBody());
     }
 
+    @GetMapping("/check-if-updated")
+    public void checkIfUpdated () {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        List<SystemItemImport> items = new ArrayList<>();
+
+        items.add(
+                SystemItemImport.builder()
+                        .id("элемент_3_1")
+                        .parentId("элемент_2_1")
+                        .size(0)
+                        .url("/элемент_0/элемент_1_2/элемент_2_1/элемент_3_1")
+                        .type(SystemItemType.FOLDER)
+                        .build()
+        );
+
+        SystemItemImportRequest requestBody = SystemItemImportRequest.builder()
+                .items(items)
+                .updateDate(Instant.now())
+                .build();
+
+        HttpEntity<SystemItemImportRequest> request = new HttpEntity<>(requestBody, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(
+                "http://localhost:8080/imports",
+                request,
+                String.class);
+
+        System.out.println("Response status: " + response.getStatusCode());
+        System.out.println("Response body: " + response.getBody());
+    }
+
 }

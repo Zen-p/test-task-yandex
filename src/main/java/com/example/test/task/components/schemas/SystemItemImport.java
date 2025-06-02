@@ -27,7 +27,7 @@ public class SystemItemImport {
     private SystemItemType type;
 
     @Column(name = "size")
-    @Min(value = 0, message = "Size must be non-negative")
+    @Min(value = 1, message = "Size must be non-negative")
     private Integer size;
 
 }
