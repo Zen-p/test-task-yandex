@@ -6,11 +6,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
+import lombok.Data;
 
-
+@Data
+@Builder
 public class SystemItemImport {
 
-    @Id
     @NotNull(message = "ID cannot be null")
     @Size(min = 1, max = 255, message = "ID length must be between 1 and 255 characters")
     private String id;
