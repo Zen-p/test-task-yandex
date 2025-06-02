@@ -20,9 +20,10 @@ public class SystemItemController {
     @PostMapping("/imports")
     public ResponseEntity<?> importItem (@RequestBody SystemItemImportRequest request) {
         try {
-            SystemItemService.importElements(request);
+            systemItemService.importElements(request);
             return ResponseEntity.ok("Вставка или обновление прошли успешно.");
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatusCode.valueOf(400)).body(new Error(400, "Validation Failed"));
         }
 

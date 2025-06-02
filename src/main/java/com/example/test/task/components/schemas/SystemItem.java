@@ -23,7 +23,7 @@ import java.util.List;
 public class SystemItem {
 
     @Id
-    @Column(name = "id", nullable = false, updatable = false)
+    @Column(name = "id", nullable = false, updatable = false, unique = true)
     @NotNull(message = "ID cannot be null")
     @Size(min = 1, max = 255, message = "ID length must be between 1 and 255 characters")
     private String id;
