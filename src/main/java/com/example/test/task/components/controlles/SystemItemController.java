@@ -31,8 +31,17 @@ public class SystemItemController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteItem (@PathVariable String id) {
         try {
-            systemItemService.deleteItem(id);
-            return ResponseEntity.ok("Вставка или обновление прошли успешно.");
+            return systemItemService.deleteItem(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatusCode.valueOf(400)).body(new Error(400, "Validation Failed"));
+        }
+    }
+
+    @GetMapping("/nodes/{id}")
+    public ResponseEntity<?> getItem (@PathVariable String id) {
+        try {
+            return systemItemService.getItem(id);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatusCode.valueOf(400)).body(new Error(400, "Validation Failed"));

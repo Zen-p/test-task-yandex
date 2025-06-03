@@ -3,11 +3,13 @@ package com.example.test.task.components.services;
 
 import com.example.test.task.components.enums.SystemItemType;
 import com.example.test.task.components.repositories.SystemItemRepository;
+import com.example.test.task.components.schemas.Error;
 import com.example.test.task.components.schemas.SystemItem;
 import com.example.test.task.components.schemas.SystemItemImport;
 import com.example.test.task.components.schemas.SystemItemImportRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -60,12 +62,25 @@ public class SystemItemService {
 
     }
 
-    public void deleteItem (String id) {
+    public ResponseEntity deleteItem (String id) {
         try {
             SystemItem itemToDelete = repository.findById(id).orElse(null);
             repository.delete(itemToDelete);
-        } catch (NullPointerException e) {
+            return ResponseEntity.ok("Удаление успешно");
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(new Error(404, "Item not found"));
+        }
+
+    }
+
+    public ResponseEntity getItem (String id) {
+        try {
+            SystemItem item = repository.findById(id).orElse(null);
+            if (item == null) return ResponseEntity.status(404).body(new Error(404, "Item not found"));
+            return ResponseEntity.status(200).body(item);
+        } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.status(400).body(new Error(400, "Validation Failed"));
         }
 
     }
