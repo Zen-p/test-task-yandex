@@ -25,7 +25,7 @@ public class SystemItemHistoryUnit {
     @Size(min = 1, max = 255, message = "ID length must be between 1 and 255 characters")
     private String id;
 
-    @Column(name = "url", length = 255)
+    @Column(name = "url")
     @Size(max = 255, message = "URL length must not exceed 255 characters")
     private String url;
 

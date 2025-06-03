@@ -16,8 +16,4 @@ import java.util.List;
 public class SystemItemImportRequest {
     private List<SystemItemImport> items;
     private Instant updateDate;
-
-    public Instant getUpdateDate () {
-        return Instant.now();
-    }
 }

@@ -8,23 +8,24 @@ import com.example.test.task.components.schemas.SystemItem;
 import com.example.test.task.components.schemas.SystemItemImport;
 import com.example.test.task.components.schemas.SystemItemImportRequest;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
 @Scope("singleton")
 @AllArgsConstructor
+@Slf4j
 public class SystemItemService {
 
     private SystemItemRepository repository;
 
-
-
+    @Transactional
     public  void importElements (SystemItemImportRequest request) {
 
-        // validation
         for (SystemItemImport item : request.getItems()) {
 
             SystemItem systemItem = repository.findById(item.getId()).orElse(new SystemItem());
@@ -32,14 +33,14 @@ public class SystemItemService {
             if (systemItem.getType() != null && systemItem.getType() != item.getType()) {
                 throw new IllegalArgumentException("Cannot change element type");
             }
+
             systemItem.setId(item.getId());
             systemItem.setType(item.getType());
             systemItem.setUrl(item.getType() == SystemItemType.FILE ? item.getUrl() : null);
+
             if (systemItem.getType() == SystemItemType.FOLDER && systemItem.getUrl() != null) {
                 throw new IllegalArgumentException("Folder must not have URL");
             }
-
-
 
             systemItem.setSize(item.getType() == SystemItemType.FILE ? item.getSize() : systemItem.getSize());
 
@@ -55,31 +56,36 @@ public class SystemItemService {
             }
 
             systemItem.setDate(request.getUpdateDate());
-
             repository.save(systemItem);
-
         }
-
     }
 
-    public ResponseEntity deleteItem (String id) {
+    @Transactional
+    public ResponseEntity<Object> deleteItem (String id) {
+
         try {
             SystemItem itemToDelete = repository.findById(id).orElse(null);
+
+            if (itemToDelete == null) return ResponseEntity.status(404).body(new Error(404, "Item not found"));
+
             repository.delete(itemToDelete);
-            return ResponseEntity.ok("Удаление успешно");
+
+            return ResponseEntity.status(200).body("Deleted successfully");
         } catch (Exception e) {
             return ResponseEntity.status(404).body(new Error(404, "Item not found"));
         }
 
     }
 
-    public ResponseEntity getItem (String id) {
+    @Transactional(readOnly = true)
+    public ResponseEntity<Object> getItem (String id) {
         try {
             SystemItem item = repository.findById(id).orElse(null);
+
             if (item == null) return ResponseEntity.status(404).body(new Error(404, "Item not found"));
+
             return ResponseEntity.status(200).body(item);
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.status(400).body(new Error(400, "Validation Failed"));
         }
 

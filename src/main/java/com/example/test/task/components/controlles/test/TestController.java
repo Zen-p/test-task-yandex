@@ -23,6 +23,12 @@ public class TestController {
     @Autowired
     private RestTemplate restTemplate;
 
+    // Суть этого контроллера заключается в том, чтобы отправлять post-запросы по нужному адресу.
+    // В течение непродолжительного времени интернета не было, а без него postman не работает,
+    // потому я сделал этот контроллер и обращался к нему через терминал (curl ... )
+    // прошу строго не судить
+    // 👉🏼👈🏼
+
     @GetMapping("/send-request")
     public void sendReqest () {
         HttpHeaders headers = new HttpHeaders();
@@ -154,7 +160,7 @@ public class TestController {
 
         SystemItemImportRequest requestBody = SystemItemImportRequest.builder()
                 .items(items)
-                .updateDate(Instant.now())
+                .updateDate(Instant.now()) // Установка настоящего времени
                 .build();
 
         HttpEntity<SystemItemImportRequest> request = new HttpEntity<>(requestBody, headers);

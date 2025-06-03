@@ -3,6 +3,7 @@ package com.example.test.task;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
@@ -15,8 +16,8 @@ public class TestTaskApplication {
 
 	}
 
-
 	@Bean
+	@Scope("singleton")
 	public RestTemplate restTemplate () {
 		return new RestTemplate();
 	}
