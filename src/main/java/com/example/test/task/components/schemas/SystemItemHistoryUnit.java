@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,8 +19,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "system_item_history_unit")
+@Builder
+@Entity
 public class SystemItemHistoryUnit {
 
+
+    @Id
     @Column(name = "id", nullable = false, updatable = false)
     @NotNull(message = "ID cannot be null")
     @Size(min = 1, max = 255, message = "ID length must be between 1 and 255 characters")

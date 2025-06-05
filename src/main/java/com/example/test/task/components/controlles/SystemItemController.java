@@ -2,6 +2,7 @@ package com.example.test.task.components.controlles;
 
 
 import com.example.test.task.components.schemas.Error;
+import com.example.test.task.components.schemas.SystemItemHistoryResponse;
 import com.example.test.task.components.schemas.SystemItemImportRequest;
 import com.example.test.task.components.services.SystemItemService;
 import lombok.AllArgsConstructor;
@@ -30,22 +31,17 @@ public class SystemItemController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteItem (@PathVariable String id) {
-        try {
             return systemItemService.deleteItem(id);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatusCode.valueOf(400)).body(new Error(400, "Validation Failed"));
-        }
     }
 
     @GetMapping("/nodes/{id}")
     public ResponseEntity<?> getItem (@PathVariable String id) {
-        try {
-            return systemItemService.getItem(id);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatusCode.valueOf(400)).body(new Error(400, "Validation Failed"));
-        }
+        return systemItemService.getItem(id);
+    }
+
+    @GetMapping("/updates")
+    public ResponseEntity<?> getUpdates () {
+            return systemItemService.getUpdates();
     }
 
 

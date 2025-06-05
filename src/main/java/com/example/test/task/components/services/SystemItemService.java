@@ -2,17 +2,18 @@ package com.example.test.task.components.services;
 
 
 import com.example.test.task.components.enums.SystemItemType;
+import com.example.test.task.components.repositories.HistoryRepository;
 import com.example.test.task.components.repositories.SystemItemRepository;
+import com.example.test.task.components.schemas.*;
 import com.example.test.task.components.schemas.Error;
-import com.example.test.task.components.schemas.SystemItem;
-import com.example.test.task.components.schemas.SystemItemImport;
-import com.example.test.task.components.schemas.SystemItemImportRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SystemItemService {
 
     private SystemItemRepository repository;
+    private HistoryRepository historyRepository;
 
     @Transactional
     public  void importElements (SystemItemImportRequest request) {
@@ -57,6 +59,17 @@ public class SystemItemService {
 
             systemItem.setDate(request.getUpdateDate());
             repository.save(systemItem);
+            historyRepository.save(
+                    SystemItemHistoryUnit.builder()
+                            .id(systemItem.getId())
+                            .url(systemItem.getUrl())
+                            .type(systemItem.getType())
+                            .date(systemItem.getDate())
+                            .parentId(systemItem.getParentId())
+                            .children(systemItem.getChildren())
+                            .size(systemItem.getSize())
+                            .build()
+            );
         }
     }
 
@@ -72,7 +85,7 @@ public class SystemItemService {
 
             return ResponseEntity.status(200).body("Deleted successfully");
         } catch (Exception e) {
-            return ResponseEntity.status(404).body(new Error(404, "Item not found"));
+            return ResponseEntity.status(400).body(new Error(400, "Validation failed"));
         }
 
     }
@@ -90,6 +103,20 @@ public class SystemItemService {
         }
 
     }
+
+    public ResponseEntity<?> getUpdates () {
+        try {
+            List<SystemItemHistoryUnit> historyUnits = historyRepository.findUpdates().orElse(null);
+
+            if (historyUnits == null) return ResponseEntity.status(404).body(new Error(404, "Item not found"));
+
+            return ResponseEntity.status(200).body(historyUnits);
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(new Error(400, "Validation Failed"));
+        }
+    }
+
+
 
 
 }
